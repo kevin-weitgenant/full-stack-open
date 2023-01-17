@@ -1,12 +1,10 @@
-const Content = ({parts,exercises}) => {
+const Content = ({parts}) => {
+    console.log('content props = ', parts)
 
-    let zipped = parts.map((x, i) => [x, exercises[i]]);
 
-    if(parts.length > 0){
-        return zipped.map(function(each){
-          return(<p>{each[0]} {each[1]} </p>)
-        })
-      } 
+    let paragraphs = parts.map(  (x) => [<p> {x.name} {x.exercises} </p>]);
+
+    return paragraphs
 }
 
 export default Content
