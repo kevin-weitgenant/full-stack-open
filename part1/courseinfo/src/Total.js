@@ -1,12 +1,16 @@
 const Total = ({parts}) =>{
     
-    var teste = <p>Number of exercises {parts.reduce(function (a,b) {
+    let total = parts.reduce(function (a,b) {
         return a + b.exercises;
-    },0)} </p>
+    },0)
+    
+    console.log(total);
+    
+    var test2 = <p>Number of exercises </p>
 
-    console.log('teste = ', teste);
+    console.log('test2 = ', test2);
 
-    return teste
+    return test2
 
 }
 
