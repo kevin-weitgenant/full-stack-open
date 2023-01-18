@@ -29,7 +29,7 @@ const App = () => {
       <Button handler = {handlerGood} name = {'good'} />
       <Button handler = {handlerNeutral} name = {'neutral'} />
       <Button handler = {handlerBad} name = {'bad'} />
-      <h1>statistics</h1>  
+      <h1>statistics</h1>
       <Statistics good = {good} neutral = {neutral} bad = {bad} />
     </div>
   )
