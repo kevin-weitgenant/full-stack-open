@@ -4,7 +4,7 @@ const Statistics = ({good,neutral,bad}) => {
 
 
     const all = () => good+neutral+bad
-    const average = () => (good + neutral+bad)/3
+    const average = () => (good*1 + neutral*0+ bad*-1)/all()
     const positive = () => good/all() * 100
 
     if (all() === 0){
