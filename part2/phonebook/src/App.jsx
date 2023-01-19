@@ -18,8 +18,12 @@ const App = () => {
 
   }
   
+
+  const getNames = () => persons.map(x => x.name)
+
   const ButtonHandler = ()=>{ 
-    setPersons(persons.concat({name: newName}))
+    let names = getNames()
+    names.includes(newName) ? alert("Nome já existe"): setPersons(persons.concat({name: newName})) 
     setNewName('')
   }
 
