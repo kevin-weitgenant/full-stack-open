@@ -60,15 +60,15 @@ const App = () => {
   const ButtonHandler = ()=>{ 
     let names = getNames()
 
-    names.includes(newName) ? alert("Nome já existe"): setPersons(persons.concat({name: newName, phone: newNumber})) 
+    names.includes(newName) ? alert("Nome já existe"): setPersons(persons.concat({name: newName, number: newNumber})) 
     setNewName('')
     setNewNumber('')
   }
 
 
 
-  const NumbersComponent = () => persons.map(x => <div key={x.name}>{`${x.name} ${x.phone}`}</div>)
-  const FilteredNumbersComponent = () => filteredNumbers.map(x => <div key={x.name}>{`${x.name} ${x.phone}`}</div>)
+  const NumbersComponent = () => persons.map(x => <div key={x.name}>{`${x.name} ${x.number}`}</div>)
+  const FilteredNumbersComponent = () => filteredNumbers.map(x => <div key={x.name}>{`${x.name} ${x.number}`}</div>)
 
   console.log('num component =' + NumbersComponent())
   return (
