@@ -1,5 +1,7 @@
 import { useState,useEffect } from 'react'
-
+import Filter from './Filter'
+import Form from './Form'
+import Persons from './Persons'
 const App = () => {
   
   const [persons, setPersons] = useState([
@@ -18,13 +20,6 @@ const App = () => {
   const getNames = () => persons.map(x => x.name)   //aux
   // const getNumbers = () => persons.map(x => x.number)   //aux
 
-
-  const filterAux = (x) => {
-    if (x.name.startsWith(filterString) ){
-      return   {name: x.name, phone:x.phone}
-    }
-  }
-
   const filterHandler = (event) =>{
     setFilterString(event.target.value)  
   }
@@ -41,7 +36,7 @@ const App = () => {
     
     console.log(resultado);
     setfilteredNumbers(resultado)
-  }, [filterString])  // pass `value` as a dependency
+  }, [filterString])  
 
 
   
@@ -67,21 +62,16 @@ const App = () => {
 
 
 
-  const NumbersComponent = () => persons.map(x => <div key={x.name}>{`${x.name} ${x.number}`}</div>)
-  const FilteredNumbersComponent = () => filteredNumbers.map(x => <div key={x.name}>{`${x.name} ${x.number}`}</div>)
-
-  console.log('num component =' + NumbersComponent())
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>filter shown with: <input value = {filterString} onChange = {filterHandler}  /> </div>
-      <form onSubmit={submitHandler}>
-        <div>name: <input value = {newName} onChange = {newNameHandler}  /> </div>
-        <div>number: <input value = {newNumber} onChange = {newNumberHandler} /></div>
-        <div><button type="submit" onClick={ButtonHandler}>add</button> </div>
-      </form>
+      
+      <Filter filterString = {filterString} filterHandler = {filterHandler} /> 
+      {/* must definitely have better ways to pass this props to Form */}
+      <Form submitHandler = {submitHandler} newName = {newName} newNameHandler = {newNameHandler} newNumber = {newNumber}
+          newNumberHandler = {newNumberHandler} ButtonHandler = {ButtonHandler}/>    
       <h2>Numbers</h2>
-      {filterString.length == 0 ? NumbersComponent() : FilteredNumbersComponent()}
+      {filterString.length == 0 ? <Persons persons = {persons}/> : <Persons persons = {filteredNumbers}/>}
     </div>
   )
 }
