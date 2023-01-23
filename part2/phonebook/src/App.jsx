@@ -71,8 +71,11 @@ const App = () => {
 
   const deleteHandler = (event)=>{
 
-
     let buttonID = event.currentTarget.id;
+    let name = event.currentTarget.name;
+
+    if (window.confirm(`Delete ${name}?`)) {
+      
     service.deletePerson(buttonID).then((response)=> {
       
       if (response.status === 200){
@@ -83,6 +86,12 @@ const App = () => {
       }
 
     })
+
+
+    }
+
+
+    
     
   }
 
