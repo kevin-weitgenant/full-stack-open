@@ -69,6 +69,24 @@ const App = () => {
   }
 
 
+  const deleteHandler = (event)=>{
+
+
+    let buttonID = event.currentTarget.id;
+    service.deletePerson(buttonID).then((response)=> {
+      
+      if (response.status === 200){
+      setPersons(persons.filter(x => x.id !=buttonID ))
+      }
+      else{
+        alert(`error deleting ${response.status}`)
+      }
+
+    })
+    
+  }
+
+
 
   return (
     <div>
@@ -76,10 +94,12 @@ const App = () => {
       
       <Filter filterString = {filterString} filterHandler = {filterHandler} /> 
       {/* must definitely have better ways to pass this props to Form */}
+      
       <Form submitHandler = {submitHandler} newName = {newName} newNameHandler = {newNameHandler} newNumber = {newNumber}
           newNumberHandler = {newNumberHandler} ButtonHandler = {ButtonHandler}/>    
+      
       <h2>Numbers</h2>
-      {filterString.length == 0 ? <Persons persons = {persons}/> : <Persons persons = {filteredNumbers}/>}
+      {filterString.length == 0 ? <Persons persons = {persons} deleteHandler = {deleteHandler}/> : <Persons persons = {filteredNumbers} deleteHandler= {deleteHandler}/>}
     </div>
   )
 }
