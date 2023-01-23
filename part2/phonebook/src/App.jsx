@@ -58,7 +58,18 @@ const App = () => {
   const ButtonHandler = ()=>{ 
     let names = getNames()
 
-    names.includes(newName) ? alert("Nome já existe"):
+    const update = () => {
+      if (window.confirm(`update ${newName}?`)) {  
+        let person = persons.find(x => x.name === newName )
+        let updatedPerson = {...person, number: newNumber}
+        service.updatePerson(updatedPerson)
+                            .then(response =>{
+                              setPersons(persons.map(x => x.id != updatedPerson.id ? x:response.data ))
+                            })
+      }
+    }
+
+    names.includes(newName) ? update():
                             service.create({name: newName,number: newNumber})
                             .then(response => {
                               const {name, number,id} = response.data
