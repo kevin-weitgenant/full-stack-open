@@ -1,4 +1,4 @@
-const Persons = ({persons}) => persons.map(x => <div key={x.name}>{`${x.name} ${x.number}`}</div>)
+const Persons = ({persons}) => persons.map(x => <div key={x.id}>{`${x.name} ${x.number}`}</div>)
 
 
 

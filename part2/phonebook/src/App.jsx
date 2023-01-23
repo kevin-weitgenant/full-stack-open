@@ -2,13 +2,11 @@ import { useState,useEffect } from 'react'
 import Filter from './Filter'
 import Form from './Form'
 import Persons from './Persons'
-import axios from 'axios'
+import service from './services/service.js'
+
+
 const App = () => {
   
-
- 
-
-
   const [persons, setPersons] = useState([
   ])
   const [newName, setNewName] = useState('')
@@ -18,13 +16,9 @@ const App = () => {
 
 
   useEffect(() => {
-  axios
-  .get('http://localhost:3001/persons')
-  .then(response => {
+  service.getPersons().then(response => {
     setPersons(response.data)})
   },[])
-  
-
   
   const getNames = () => persons.map(x => x.name)   //aux
   // const getNumbers = () => persons.map(x => x.number)   //aux
@@ -64,7 +58,12 @@ const App = () => {
   const ButtonHandler = ()=>{ 
     let names = getNames()
 
-    names.includes(newName) ? alert("Nome já existe"): setPersons(persons.concat({name: newName, number: newNumber})) 
+    names.includes(newName) ? alert("Nome já existe"):
+                            service.create({name: newName,number: newNumber})
+                            .then(response => {
+                              const {name, number,id} = response.data
+                              setPersons(persons.concat({name,number,id}))
+                            }) 
     setNewName('')
     setNewNumber('')
   }
