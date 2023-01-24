@@ -70,14 +70,16 @@ const App = () => {
         service.updatePerson(updatedPerson)
                             .then(response =>{
                               setPersons(persons.map(x => x.id != updatedPerson.id ? x:response.data ))
-                              statusUpdate(`Updated ${updatedPerson.name} number`)
+                              statusUpdate(`Updated ${updatedPerson.name} number`, false)
                             })
+                            .catch(error => statusUpdate(`Information of ${newName} has already been removed from server`, true))
       }
     }
 
 
-    const statusUpdate = (message) =>{
-      setStatus(message)
+    const statusUpdate = (message, error) =>{
+      console.log('message = ',message,'error = ',error);
+      setStatus({message, error})
       setTimeout(() => {setStatus(null)},5000)
     }
 
@@ -87,7 +89,7 @@ const App = () => {
                             .then(response => {
                               const {name, number,id} = response.data
                               setPersons(persons.concat({name,number,id}))
-                              statusUpdate(`Added ${newName}`)
+                              statusUpdate(`Added ${newName}`, false)
 
                             }) 
     setNewName('')
@@ -107,10 +109,6 @@ const App = () => {
       if (response.status === 200){
       setPersons(persons.filter(x => x.id !=buttonID ))
       }
-      else{
-        alert(`error deleting ${response.status}`)
-      }
-
     })
 
 

@@ -1,17 +1,26 @@
 const Status = ({status}) => {
 
+
     if (status === null){
         return null
     }
-
-    return (
-        <div className = 'status'> 
-            {status}
-        </div>
-    )
-
-
-
+    
+    if (status.error){
+        return (
+            <div className = 'error'> 
+                {status.message}
+            </div>
+        )
+    }
+    
+    
+    if (!status.error){       
+        return (
+            <div className = 'status'> 
+                {status.message}
+            </div>
+        )
+    }
 
 }
 
