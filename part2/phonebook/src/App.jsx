@@ -3,6 +3,8 @@ import Filter from './Filter'
 import Form from './Form'
 import Persons from './Persons'
 import service from './services/service.js'
+import './App.css'
+import Status from './Status'
 
 
 const App = () => {
@@ -13,6 +15,9 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filterString, setFilterString] = useState('')
   const [filteredNumbers, setfilteredNumbers] = useState('')
+
+  const [status, setStatus] = useState(null)
+
 
 
   useEffect(() => {
@@ -65,15 +70,25 @@ const App = () => {
         service.updatePerson(updatedPerson)
                             .then(response =>{
                               setPersons(persons.map(x => x.id != updatedPerson.id ? x:response.data ))
+                              statusUpdate(`Updated ${updatedPerson.name} number`)
                             })
       }
     }
+
+
+    const statusUpdate = (message) =>{
+      setStatus(message)
+      setTimeout(() => {setStatus(null)},5000)
+    }
+
 
     names.includes(newName) ? update():
                             service.create({name: newName,number: newNumber})
                             .then(response => {
                               const {name, number,id} = response.data
                               setPersons(persons.concat({name,number,id}))
+                              statusUpdate(`Added ${newName}`)
+
                             }) 
     setNewName('')
     setNewNumber('')
@@ -111,7 +126,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      
+      <Status status = {status}/>
       <Filter filterString = {filterString} filterHandler = {filterHandler} /> 
       {/* must definitely have better ways to pass this props to Form */}
       
