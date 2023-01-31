@@ -24,22 +24,28 @@ const phoneNumbers = [
     }
 ]
 
+const requestTime = function (req,res,next){
+  req.requestTime = new Date()
+  next()
+}
+
+app.use(requestTime)
+
 app.get('/api/persons', (request,response) =>{
     response.json(phoneNumbers)
 
 })
 
 
-app.get('/api/info', (request,response) =>{
-    response.send(`Phonebook has info for ${phoneNumbers.length} <p> <`)
-    r
+app.get('/info', (request,response) =>{
+    response.send(`Phonebook has info for ${phoneNumbers.length} people
+                  <br> </br>
+                  ${request.requestTime.toString()}
+    `)
 })  
-
-
-
 
 
 const PORT = 3001
 app.listen(PORT, () => {
-    console.log(`Server runnin on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 })
