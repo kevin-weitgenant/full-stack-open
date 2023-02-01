@@ -48,14 +48,24 @@ function getRandomInt(min, max) {
 app.post('/api/persons', (request,response) =>{
     const number = request.body
     if (number.name && number.number){
+      if (phoneNumbers.map(x=> x.name).includes(number.name)){
+        return response.status(400).json({
+          error: "name must be unique"
+        })  
+      }
+      
       number.id = getRandomInt(5,10000)
       phoneNumbers = phoneNumbers.concat(number)
       response.json(number)
     } 
     else{
-    return response.status(400).json({
-      error: "content missing"
-    })
+      if(!number.name || !number.number){
+        return response.status(400).json({
+          error: `${!number.name ? 'name': 'number'} missing`
+        })
+      }
+   
+    
     }    
     
 })
