@@ -1,5 +1,8 @@
 const express = require('express')
 const app = express()
+var morgan = require('morgan')
+
+
 
 let phoneNumbers = [
     { 
@@ -29,6 +32,7 @@ const requestTime = function (req,res,next){
   next()
 }
 
+app.use(morgan('tiny'))
 app.use(requestTime)
 app.use(express.json())
 
