@@ -30,10 +30,34 @@ const requestTime = function (req,res,next){
 }
 
 app.use(requestTime)
+app.use(express.json())
+
 
 app.get('/api/persons', (request,response) =>{
     response.json(phoneNumbers)
 
+})
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+}
+
+
+app.post('/api/persons', (request,response) =>{
+    const number = request.body
+    if (number.name && number.number){
+      number.id = getRandomInt(5,10000)
+      phoneNumbers = phoneNumbers.concat(number)
+      response.json(number)
+    } 
+    else{
+    return response.status(400).json({
+      error: "content missing"
+    })
+    }    
+    
 })
 
 
