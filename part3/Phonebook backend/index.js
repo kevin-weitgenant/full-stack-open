@@ -37,6 +37,21 @@ app.get('/api/persons', (request,response) =>{
 })
 
 
+app.get('/api/persons/:id', (request,response) =>{
+    const id = Number(request.params.id)
+    const phone = phoneNumbers.find(x => x.id == id)
+    
+    if (phone){
+      response.json(phone)
+    }
+    else{
+      response.status(404).end()
+    }
+
+
+})
+
+
 app.get('/info', (request,response) =>{
     response.send(`Phonebook has info for ${phoneNumbers.length} people
                   <br> </br>
