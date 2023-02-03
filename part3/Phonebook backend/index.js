@@ -33,6 +33,7 @@ const requestTime = function (req,res,next){
   next()
 }
 
+app.use(express.static('dist'))
 app.use(morgan('tiny'))
 app.use(requestTime)
 app.use(express.json())
