@@ -1,8 +1,9 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 var morgan = require('morgan')
 
-
+app.use(cors())
 
 let phoneNumbers = [
     { 
@@ -61,6 +62,7 @@ app.post('/api/persons', (request,response) =>{
       number.id = getRandomInt(5,10000)
       phoneNumbers = phoneNumbers.concat(number)
       response.json(number)
+      console.log(JSON.stringify(number));
     } 
     else{
       if(!number.name || !number.number){
