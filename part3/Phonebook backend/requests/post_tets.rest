@@ -1,10 +1,10 @@
-POST https://phonebookfso427.onrender.com/api/persons HTTP/1.1
+POST http://localhost:3001/api/persons HTTP/1.1
 Content-Type: application/json
 
 {
     
-    "name": "ciclano12", 
-    "number": "00-43-234000"
+    "name": "frankstein", 
+    "number": "00-43-485484"
 }
 ###  
 

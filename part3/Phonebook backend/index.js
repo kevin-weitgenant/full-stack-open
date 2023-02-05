@@ -1,7 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
 var morgan = require('morgan')
+const Person = require('./models/person')
 
 app.use(cors())
 
@@ -33,6 +35,12 @@ const requestTime = function (req,res,next){
   next()
 }
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+}
+
 app.use(express.static('dist'))
 app.use(morgan('tiny'))
 app.use(requestTime)
@@ -40,16 +48,11 @@ app.use(express.json())
 
 
 app.get('/api/persons', (request,response) =>{
-    response.json(phoneNumbers)
+    Person.find({}).then(people => {
+      response.json(people)
+    })
 
 })
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-}
-
 
 app.post('/api/persons', (request,response) =>{
     const number = request.body
@@ -60,10 +63,19 @@ app.post('/api/persons', (request,response) =>{
         })  
       }
       
-      number.id = getRandomInt(5,10000)
-      phoneNumbers = phoneNumbers.concat(number)
-      response.json(number)
-      console.log(JSON.stringify(number));
+      const person = new Person({
+        name: number.name,
+        number: number.number,
+      })
+
+      person.save().then(savedPerson => {
+        response.json(savedPerson)
+      })
+
+      // number.id = getRandomInt(5,10000)
+      // phoneNumbers = phoneNumbers.concat(number)
+      // response.json(number)
+      // console.log(JSON.stringify(number));
     } 
     else{
       if(!number.name || !number.number){
