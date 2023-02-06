@@ -103,12 +103,12 @@ app.get('/api/persons/:id', (request,response) =>{
 
 
 })
-app.delete('/api/persons/:id', (request,response) =>{
-    const id = Number(request.params.id)
-    phoneNumbers = phoneNumbers.filter(x => x.id !== id)
-    
-    response.status(204).end()
-    
+app.delete('/api/persons/:id', (request,response,next) =>{
+    Person.findByIdAndRemove(request.params.id)
+      .then(result => {
+        response.status(204).end()
+      })
+      .catch(error => next(error))
 })
 
 
@@ -120,7 +120,18 @@ app.get('/info', (request,response) =>{
 })  
 
 
+const errorHandler = function (req,res,error,next){
+  console.log(error);
+
+  next()
+}
+
+app.use(errorHandler)
+
+
+
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 })
+  
