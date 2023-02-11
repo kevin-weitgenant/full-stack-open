@@ -83,6 +83,8 @@ const App = () => {
       setTimeout(() => {setStatus(null)},5000)
     }
 
+    
+
 
     names.includes(newName) ? update():
                             service.create({name: newName,number: newNumber})
@@ -91,7 +93,8 @@ const App = () => {
                               setPersons(persons.concat({name,number,id}))
                               statusUpdate(`Added ${newName}`, false)
 
-                            }) 
+                            })
+                            .catch(error => {statusUpdate(error.response.data.error, true)}) 
     setNewName('')
     setNewNumber('')
   }

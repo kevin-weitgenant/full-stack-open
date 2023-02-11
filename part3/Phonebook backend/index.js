@@ -48,7 +48,7 @@ app.use(express.json())
 
 
 app.put('/api/persons', (request,response,next) =>{
-    Person.findByIdAndUpdate(request.params.id)
+    Person.findByIdAndUpdate(request.params.id, {runValidators: true})
     .then(person => {
       name: request.params.name
       number:request.params.number
@@ -67,7 +67,7 @@ app.get('/api/persons', (request,response,next) =>{
 
 })
 
-app.post('/api/persons', (request,response) =>{
+app.post('/api/persons', (request,response,next) =>{
     const number = request.body
     if (number.name && number.number){
       if (phoneNumbers.map(x=> x.name).includes(number.name)){
@@ -84,6 +84,7 @@ app.post('/api/persons', (request,response) =>{
       person.save().then(savedPerson => {
         response.json(savedPerson)
       })
+      .catch(error => next(error))
 
       // number.id = getRandomInt(5,10000)
       // phoneNumbers = phoneNumbers.concat(number)
@@ -158,6 +159,10 @@ const errorHandler = function (error, request, response, next){
 
   if (error.name === 'CastError'){
     return response.status(400).send({error: "malformated id"})
+  }
+
+  else if (error.name === 'ValidationError'){
+    return response.status(400).json({error: error.message})
   }
 
   next()
