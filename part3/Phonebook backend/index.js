@@ -70,26 +70,36 @@ app.get('/api/persons', (request,response,next) =>{
 app.post('/api/persons', (request,response,next) =>{
     const number = request.body
     if (number.name && number.number){
-      if (phoneNumbers.map(x=> x.name).includes(number.name)){
+      Person.find({})
+    .then(people => {
+      if (people.map(x=> x.name).includes(number.name)){
         return response.status(400).json({
           error: "name must be unique"
         })  
+      } 
+      else{
+        const person = new Person({
+          name: number.name,
+          number: number.number,
+        })
+  
+        person.save().then(savedPerson => {
+          response.json(savedPerson)
+        })
+        .catch(error => next(error))
       }
+
+
+
+
+
+    }) 
       
-      const person = new Person({
-        name: number.name,
-        number: number.number,
-      })
+      
+      
+      
 
-      person.save().then(savedPerson => {
-        response.json(savedPerson)
-      })
-      .catch(error => next(error))
-
-      // number.id = getRandomInt(5,10000)
-      // phoneNumbers = phoneNumbers.concat(number)
-      // response.json(number)
-      // console.log(JSON.stringify(number));
+ 
     } 
     else{
       if(!number.name || !number.number){
@@ -175,7 +185,7 @@ app.use(errorHandler)
 
 
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3003
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 })

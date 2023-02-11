@@ -1,0 +1,41 @@
+POST http://localhost:3001/api/persons HTTP/1.1
+Content-Type: application/json
+
+{
+    
+    "name": "Arto Hellas", 
+      "number": "040-123456"
+}
+
+###
+POST http://localhost:3001/api/persons HTTP/1.1
+Content-Type: application/json
+
+{
+    
+    "name": "Ada Lovelace", 
+    "number": "39-445323523"
+}
+###
+POST http://localhost:3001/api/persons HTTP/1.1
+Content-Type: application/json
+
+{
+    
+     "name": "Dan Abramov", 
+      "number": "124-234345"
+}
+###
+POST http://localhost:3001/api/persons HTTP/1.1
+Content-Type: application/json
+
+{
+    
+   "name": "Mary Poppendieck", 
+    "number": "39-236423122"
+}
+
+
+
+
+

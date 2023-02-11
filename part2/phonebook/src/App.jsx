@@ -107,19 +107,10 @@ const App = () => {
 
     if (window.confirm(`Delete ${name}?`)) {
       
-    service.deletePerson(buttonID).then((response)=> {
-      
-      if (response.status === 200){
+    service.deletePerson(buttonID).then((response)=> {   
       setPersons(persons.filter(x => x.id !=buttonID ))
-      }
     })
-
-
-    }
-
-
-    
-    
+    }  
   }
 
 
