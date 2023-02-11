@@ -108,7 +108,9 @@ const App = () => {
     if (window.confirm(`Delete ${name}?`)) {
       
     service.deletePerson(buttonID).then((response)=> {   
+      if (response.status == 204){
       setPersons(persons.filter(x => x.id !=buttonID ))
+      }
     })
     }  
   }
