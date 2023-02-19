@@ -19,7 +19,19 @@ const totalLikes = (posts) =>{
     return(resultado)
     
 }
+
+const favoriteBlog = (blogs) => {
+    if (!Array.isArray(blogs)) {
+        return (blogs)
+    }
+
+    let maxLikes = Math.max(...blogs.map(post=> post.likes))
+    return (blogs.find(post => post.likes === maxLikes ) ||0 )
+
+  }
+
+
         
 module.exports =   {
-    dummy, totalLikes
+    dummy, totalLikes, favoriteBlog
 }

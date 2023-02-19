@@ -1,4 +1,4 @@
-const {totalLikes,dummy} = require('../utils/list_helper')
+const {totalLikes,dummy, favoriteBlog} = require('../utils/list_helper')
 
 test('dummy returns one', () => {
   const blogs = []
@@ -70,6 +70,22 @@ describe('4.4 Total likes', () => {
   })
   test('[blogs[0],blogs[1]', () => {
     expect(totalLikes([blogs[0],blogs[1]])).toBe(12);
+  })
+
+})
+
+
+describe('4.5 favorite blog', () => {
+
+  test('list with just one blog', () => {
+    expect(favoriteBlog(blogs[0])).toEqual(blogs[0]);
+  }),
+  test('empty list', () => {
+    expect(favoriteBlog([])).toBe(0);
+  }),
+
+  test('all blogs', () => {
+    expect(favoriteBlog(blogs)).toEqual(blogs[2]);
   })
 
 })
