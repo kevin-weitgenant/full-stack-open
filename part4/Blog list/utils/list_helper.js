@@ -58,15 +58,15 @@ const mostLikes = (blogs)=>{
 
     let grouped = _.groupBy(blogs,'author')
     
+    const getLikes= (author) => {
+        return(
+            grouped[author].reduce((accumulator,item) =>{return item.likes + accumulator},0)
+        )                                         
+    }
     
-    let author = _.maxBy(_.keys(grouped), (author)=> grouped[author]
-                                                     .reduce((accumulator,item) =>
-                                                     {return item.likes + accumulator},0) )
-
-    let likes = grouped[author]
-    .reduce((accumulator,item) =>
-    {return item.likes + accumulator},0) 
-
+   
+    let author = _.maxBy(_.keys(grouped), author => getLikes(author))
+    let likes = getLikes(author)
 
 
     console.log({author,likes});
