@@ -1,4 +1,4 @@
-const {totalLikes,dummy, favoriteBlog, mostBlogs} = require('../utils/list_helper')
+const {totalLikes,dummy, favoriteBlog, mostBlogs, mostLikes} = require('../utils/list_helper')
 
 const _ = require('lodash');
 
@@ -110,6 +110,29 @@ describe('4.6 most blogs', () => {
   
   test('Just one blog', () => {
     expect(mostBlogs(blogs[0])).toEqual('No authors or not enough authors provided');
+  })
+
+
+})
+
+
+describe('4.7 most likes', () => {
+
+
+  test('all blogs', () => {
+    expect(mostLikes(blogs)).toEqual({'author': "Edsger W. Dijkstra", 'likes': 17});
+  })
+
+  test('not a list', () => {
+    expect(mostLikes(123)).toEqual('No authors or not enough authors provided');
+  })
+
+  test('empty list', () => {
+    expect(mostLikes([])).toEqual('No authors or not enough authors provided');
+  })
+  
+  test('Just one blog', () => {
+    expect(mostLikes(blogs[0])).toEqual('No authors or not enough authors provided');
   })
 
 
