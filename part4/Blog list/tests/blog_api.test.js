@@ -6,14 +6,12 @@ const Blog = require('../models/blog')
 const {blogs} = require('../utils/list_helper')
 const blogsinDb = require('./test_helper')
 
-
-
 beforeEach(async () => {
     await Blog.deleteMany({})
     const blogObjects = blogs.map(blog => new Blog(blog))
     const promiseArray = blogObjects.map(blog => blog.save())
     await Promise.all(promiseArray)
-})
+},100000)
 
 test('notes are returned as json', async() => {
     await api
@@ -33,7 +31,7 @@ test('notes are returned as json', async() => {
       expect(response.body[0]['id']).toBeDefined();
   })
   
-  
+  describe ("POST TESTS", () => {
   test("POST request to the /api/blogs URL successfully creates a new blog post", async() => {  
     
     const test_blog = {
@@ -101,5 +99,50 @@ test('notes are returned as json', async() => {
     .send(test_blog)
     .expect(400)
   },100000)
+  })
 
+
+  describe('individual id tests', () => {
+    test('getting specific blog by id', async() => {
+        
+        blogObject = new Blog(blogs[0])
+        
+        const response = await api.get('/api/blogs/5a422a851b54a676234d17f7')
+
+        console.log('response.body =', response.body);
+
+        expect(response.body).toEqual(blogObject.toJSON())
+    });
+
+
+    test('deleting by id', async() => {
+        
+        blogObject = new Blog(blogs[0])
+        
+        const response = await api.delete('/api/blogs/5a422a851b54a676234d17f7')
+        
+        const result = await Blog.findById('5a422a851b54a676234d17f7')
+
+        expect(result).toBeNull()
+        
+    });
+
+    test('deleting a random ID', async() => {
+        const id_test = mongoose.Types.ObjectId()
+        const response = await api.delete(`/api/blogs/${id_test}`)
+        expect(response.status).toBe(404)   
+    });
+    
+    
+    test('updating by id', async() => {
+        blogObject = {...blogs[0], "likes" : blogs[0]['likes'] +1}
+        console.log('blogObject =', blogObject);
+        const response = await api.put('/api/blogs/5a422a851b54a676234d17f7').send(blogObject)
+
+        const blogsreturned = await blogsinDb()
+        expect(blogsreturned.find((blog) => blog['id'] === '5a422a851b54a676234d17f7')?.likes).toBe(blogObject['likes'])   
+    });
+
+    
+},100000);
 
