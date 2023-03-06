@@ -6,6 +6,52 @@ blogsRouter.get('/', async (request, response) => {
     response.json(blogs)
   })
 
+  blogsRouter.get('/:id', async (request, response) => {
+    console.log("chego aqui");
+    const id = request.params.id;
+    const blog = await Blog.findById(id)
+
+    if (response){
+      response.json(blog)
+    }
+    else{
+      response.status(404).send("not found")
+    }
+
+  })
+
+  blogsRouter.delete('/:id', async (request, response) => {
+    const id = request.params.id;
+    const result = await Blog.findByIdAndDelete(id)
+    console.log('result = ', result);
+    if (result){
+      response.status(200).send("sucessfully deleted")
+    }
+    
+    else{
+      response.status(404).send("resource not found")
+    }
+
+    
+  })
+  
+  blogsRouter.put('/:id', async (request, response) => {
+    const id = request.params.id;
+    const result = await Blog.findByIdAndUpdate(id,request.body)
+    console.log('result = ', result);
+
+    if (result){
+      response.status(200).send("sucessfully updated")
+    }
+    
+    else{
+      response.status(404).send("resource not found")
+    }
+
+    
+  })
+
+
 
   blogsRouter.post('/', async(request, response) => {
     
