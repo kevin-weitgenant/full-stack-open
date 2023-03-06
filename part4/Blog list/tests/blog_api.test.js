@@ -36,11 +36,43 @@ test('notes are returned as json', async() => {
   
   test("POST request to the /api/blogs URL successfully creates a new blog post", async() => {  
     
-    const blogObject = new Blog(blogs[blogs[0]])
-    await blogObject.save()
+    const test_blog = {
+        title: "testezao",
+        author: "Kevinzao",
+        url: "https://baitaURL.com/",   
+    }
+
+    await api
+    .post('/api/blogs')
+    .send(test_blog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
     const blogsreturned = await blogsinDb()
     console.log('blogs =', blogsreturned);
     expect(blogsreturned).toHaveLength(blogs.length+1)
+  },100000)
+
+
+  test("verifies that if the likes property is missing from the request, it will default to the value 0", async() => {
+
+    const test_blog = {
+        title: "testezao",
+        author: "Kevinzao",
+        url: "https://reactpatterns.com/",
+        __v: 0
+    }
+
+    await api
+    .post('/api/blogs')
+    .send(test_blog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+    
+    const blogsreturned = await blogsinDb()
+    console.log('blogs =', blogsreturned);
+    expect(blogsreturned[blogsreturned.length -1]['likes']).toEqual(0)
+
   },100000)
 
 
