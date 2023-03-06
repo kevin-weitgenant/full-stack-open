@@ -59,8 +59,7 @@ test('notes are returned as json', async() => {
     const test_blog = {
         title: "testezao",
         author: "Kevinzao",
-        url: "https://reactpatterns.com/",
-        __v: 0
+        url: "https://reactpatterns.com/"
     }
 
     await api
@@ -73,6 +72,34 @@ test('notes are returned as json', async() => {
     console.log('blogs =', blogsreturned);
     expect(blogsreturned[blogsreturned.length -1]['likes']).toEqual(0)
 
+  },100000)
+
+
+  test("author missing", async() =>{
+
+    const test_blog = {
+        title: "testezao",
+        url: "https://reactpatterns.com/",
+    }
+
+    await api
+    .post('/api/blogs')
+    .send(test_blog)
+    .expect(400)
+  },100000)
+  
+  
+  test("url missing", async() =>{
+
+    const test_blog = {
+        title: "testezao",
+        author: "falastrão dos pump",
+    }
+
+    await api
+    .post('/api/blogs')
+    .send(test_blog)
+    .expect(400)
   },100000)
 
 
