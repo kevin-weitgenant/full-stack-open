@@ -7,12 +7,12 @@ const blogSchema = new mongoose.Schema({
     author: String,
     url: String,
     likes: Number,
-    author: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post'
-      }
-    ],
+    // author: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Post'
+    //   }
+    // ],
   })
 
 blogSchema.set('toJSON', {
