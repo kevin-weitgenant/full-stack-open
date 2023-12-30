@@ -6,14 +6,15 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
-    "test": "cross-env NODE_ENV=test jest --verbose"
+    "test": "cross-env NODE_ENV=test vitest",
+    "coverage": "vitest --coverage"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^29.4.3",
     "nodemon": "^2.0.20",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "vitest": "^1.1.0"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -25,9 +26,5 @@
     "lodash": "^4.17.21",
     "mongodb-memory-server": "^9.0.1",
     "mongoose": "^6.9.2"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "globalTeardown": "./tests/teardown.js"
   }
 }
