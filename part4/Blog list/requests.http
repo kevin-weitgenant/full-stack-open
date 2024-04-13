@@ -1,0 +1,14 @@
+### GET request to fetch all blogs
+GET http://localhost:27017/api/blogs
+Accept: application/json
+
+### POST request to create a new blog
+POST http://localhost:27017/api/blogs
+Content-Type: application/json
+
+{
+  "title": "teste teste teste",
+  "author": "Blog Author",
+  "url": "http://newblogurl.com",
+  "likes": 5
+}
