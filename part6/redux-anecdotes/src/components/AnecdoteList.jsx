@@ -8,9 +8,15 @@ const AnecdoteList = () => {
     dispatch(voteAnecdote(id));
   };
 
-  const anecdotes = useSelector((state) =>
-    [...state].sort((a, b) => b.votes - a.votes)
-  );
+  const anecdotes = useSelector((state) => {
+    // First, filter anecdotes based on the filter state if it is not empty
+    const filteredAnecdotes = state.anecdotes.filter(anecdote =>
+        state.filter ? anecdote.content.toLowerCase().includes(state.filter.toLowerCase()) : true
+    );
+
+    // Then sort the filtered anecdotes by votes in descending order
+    return filteredAnecdotes.sort((a, b) => b.votes - a.votes);
+});
 
   return (
     <>
