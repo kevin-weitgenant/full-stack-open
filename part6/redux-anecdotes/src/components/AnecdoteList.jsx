@@ -1,12 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
 import { voteAnecdote } from "../reducers/anecdoteReducer";
+import {
+  setNotification,
+  clearNotification,
+} from "../reducers/NotificationReducer";
 
 const AnecdoteList = () => {
   const dispatch = useDispatch();
+  const anecdotesVote = useSelector((state) => state.anecdotes);
 
   const vote = (id) => {
-    console.log("id = ", id);
-    dispatch(voteAnecdote(id));
+    const anecdoteVote = anecdotesVote.find((a) => a.id === id);
+    if (anecdoteVote) {
+      dispatch(voteAnecdote(id));
+
+      // Set a notification with the content of the voted anecdote
+      dispatch(setNotification(`you voted: '${anecdoteVote.content}'`));
+      setTimeout(() => {
+        dispatch(clearNotification());
+      }, 5000); // Clears the notification after 5 seconds
+    }
   };
 
   const anecdotes = useSelector((state) => {
