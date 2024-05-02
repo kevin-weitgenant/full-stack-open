@@ -5,6 +5,7 @@ const AnecdoteList = () => {
   const dispatch = useDispatch();
 
   const vote = (id) => {
+    console.log("id = ", id);
     dispatch(voteAnecdote(id));
   };
 
