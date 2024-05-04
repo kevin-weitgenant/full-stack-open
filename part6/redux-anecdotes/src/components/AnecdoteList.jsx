@@ -31,6 +31,7 @@ const AnecdoteList = () => {
 
   const anecdotes = useSelector((state) => {
     // First, filter anecdotes based on the filter state if it is not empty
+    
     const filteredAnecdotes = state.anecdotes.filter(anecdote =>
         state.filter ? anecdote.content.toLowerCase().includes(state.filter.toLowerCase()) : true
     );
