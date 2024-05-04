@@ -17,6 +17,20 @@ const notificationSlice = createSlice({
   },
 });
 
+
+
+export const setNotificationThunk = (message,duration) => {
+  return async (dispatch) => {
+    console.log("message = ", message);
+    dispatch(setNotification(message))
+    setTimeout(() => {
+      dispatch(clearNotification());
+    }, duration*1000); // Clears the notification after 5 seconds
+  };
+};
+
+
+
 export const { setNotification, clearNotification } = notificationSlice.actions;
 
 const notificationReducer = notificationSlice.reducer;

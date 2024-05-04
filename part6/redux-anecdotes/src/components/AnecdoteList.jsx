@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { voteAnecdote, setAnecdotesStart} from "../reducers/anecdoteReducer";
 import {
-  setNotification,
-  clearNotification,
+  setNotificationThunk
 } from "../reducers/NotificationReducer";
 import { useEffect } from "react";
 
@@ -22,10 +21,7 @@ const AnecdoteList = () => {
       dispatch(voteAnecdote(id));
 
       // Set a notification with the content of the voted anecdote
-      dispatch(setNotification(`you voted: '${anecdoteVote.content}'`));
-      setTimeout(() => {
-        dispatch(clearNotification());
-      }, 5000); // Clears the notification after 5 seconds
+      dispatch(setNotificationThunk(`you voted: '${anecdoteVote.content}'`, 5));
     }
   };
 

@@ -1,8 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { createAnecdote } from '../reducers/anecdoteReducer'
 import {
-  setNotification,
-  clearNotification,
+  setNotificationThunk
 } from "../reducers/NotificationReducer";
 
 
@@ -20,10 +19,7 @@ const create = async (event)=>{
   
   dispatch(createAnecdote(content));
 
-  dispatch(setNotification(`you created anecdote: '${content}'`));
-  setTimeout(() => {
-    dispatch(clearNotification());
-  }, 5000); // Clears the notification after 5 seconds
+  dispatch(setNotificationThunk(`you created anecdote: '${content}'`,5)); 
 }
 
 
