@@ -42,7 +42,7 @@ const anecdoteSlice = createSlice({
       return action.payload;
     },
     appendAnecdote(state,action){
-      return state.push(action.payload);
+      state.push(action.payload);
     }
   },
 });
@@ -59,6 +59,7 @@ export const setAnecdotesStart = () => {
 export const createAnecdote = (content) => {
   return async (dispatch) => {
     const newAnecdote = await anecdoteService.createNew(content);
+    console.log("new anecdote = ", newAnecdote);
     dispatch(appendAnecdote(newAnecdote));
   };
 };
