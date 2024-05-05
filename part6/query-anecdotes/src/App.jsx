@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import AnecdoteForm from "./components/AnecdoteForm";
 import Notification from "./components/Notification";
-import axios from "axios";
-import { getAll } from "./requests";
+import  {getAll}  from "./requests";
 
 const App = () => {
   const handleVote = (anecdote) => {
@@ -11,7 +10,7 @@ const App = () => {
 
 
   const result = useQuery({
-    queryKey: ["notes"],
+    queryKey: ["anecdotes"],
     queryFn: getAll
   });
 
