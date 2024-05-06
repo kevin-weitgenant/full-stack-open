@@ -7,7 +7,7 @@ const AnecdoteForm = () => {
 
   const queryClient = useQueryClient();
 
-  const newNoteMutation = useMutation({
+  const newAnecdoteMutation = useMutation({
     mutationFn: createNew,
 
     onSuccess: () => {
@@ -19,7 +19,7 @@ const AnecdoteForm = () => {
     event.preventDefault()
     const content = event.target.anecdote.value
     event.target.anecdote.value = ''
-    newNoteMutation.mutate(content)
+    newAnecdoteMutation.mutate(content)
 }
 
   return (
